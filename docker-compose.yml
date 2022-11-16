@@ -1,0 +1,48 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: example
+      PGDATA: customDataFolder
+    volumes:
+      - ./dbData:/var/lib/postgresql/data/customDataFolder
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  backend:
+    build: ./2209-wns-rivest-groupe1-back
+    env_file:
+      - vars.env
+    volumes:
+      - ./2209-wns-rivest-groupe1-back/src:/app/src
+    ports:
+      - 5000:5000
+    healthcheck:
+      test: 'curl --fail --request POST --header ''content-type: application/json'' --url ''http://localhost:5000'' --data ''{"query":"query { __typename }"}'' || exit 1'
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    depends_on:
+      db:
+        condition: service_healthy
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+    depends_on:
+      db:
+        condition: service_healthy
+
+  images:
+    build: ./images-upload-service
+    volumes:
+      - ./images-upload-service/src:/app/src
+      - ./images-upload-service/uploads:/app/uploads
+    ports:
+      - 8000:8000
