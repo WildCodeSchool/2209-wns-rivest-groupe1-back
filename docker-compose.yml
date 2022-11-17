@@ -8,17 +8,17 @@ services:
     volumes:
       - ./dbData:/var/lib/postgresql/data/customDataFolder
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d postgres -U postgres"]
+      test: ['CMD-SHELL', 'pg_isready -d postgres -U postgres']
       interval: 5s
       timeout: 5s
       retries: 10
 
   backend:
-    build: ./2209-wns-rivest-groupe1-back
+    build: ./back
     env_file:
-      - vars.env
+      - .env
     volumes:
-      - ./2209-wns-rivest-groupe1-back/src:/app/src
+      - ./back/src:/app/src
     ports:
       - 5000:5000
     healthcheck:
@@ -38,11 +38,3 @@ services:
     depends_on:
       db:
         condition: service_healthy
-
-  images:
-    build: ./images-upload-service
-    volumes:
-      - ./images-upload-service/src:/app/src
-      - ./images-upload-service/uploads:/app/uploads
-    ports:
-      - 8000:8000
