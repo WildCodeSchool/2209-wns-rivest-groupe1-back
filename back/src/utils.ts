@@ -1,5 +1,7 @@
 import { DataSource } from 'typeorm';
 import { User } from './entity/user';
+import { Blog } from './entity/blog';
+import { Category } from './entity/category';
 
 const dataSource = new DataSource({
   type: 'postgres',
@@ -9,7 +11,7 @@ const dataSource = new DataSource({
   password: 'example',
   database: 'postgres',
   synchronize: true,
-  entities: [User],
+  entities: [User, Category, Blog],
 });
 
 export default dataSource;
