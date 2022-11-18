@@ -1,5 +1,6 @@
 import { Field, ObjectType } from "type-graphql";
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Article } from "./article";
 
 @ObjectType()
 @Entity()
@@ -12,6 +13,6 @@ export class Comment {
   @Column()
   label: string;
 
-  // @ManyToOne(() => Comment, (comment) => comment.)
-  //  comments: Comment;
+  @ManyToOne(() => Article, (article) => article.comments)
+  article: Article;
 }

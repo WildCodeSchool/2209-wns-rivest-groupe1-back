@@ -1,12 +1,5 @@
 import { Field, ObjectType } from "type-graphql";
-import {
-  Column,
-  Entity,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  ManyToMany,
-  JoinTable,
-} from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 import { Article } from "./article";
 import { Category } from "./category";
 

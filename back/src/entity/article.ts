@@ -6,6 +6,9 @@ import {
   ManyToOne,
   ManyToMany,
   JoinTable,
+  OneToMany,
+  UpdateDateColumn,
+  CreateDateColumn,
 } from "typeorm";
 import { Blog } from "./blog";
 import { Comment } from "./comment";
@@ -23,16 +26,16 @@ export class Article {
   label: string;
 
   @Field()
-  @Column()
-  createdAt: string;
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @Field()
+  @UpdateDateColumn()
+  updatedAt: Date;
 
   @Field({ nullable: true })
   @Column()
-  updateAt?: string;
-
-  @Field({ nullable: true })
-  @Column()
-  publishedAt?: string;
+  publishedAt?: Date;
 
   @Field()
   @Column()
@@ -42,6 +45,11 @@ export class Article {
   @Column()
   isPublished: boolean;
 
+  // @Field()
+  // @ManyToOne(() => Blog, (blog) => blog.articles, {
+  //   onDelete: "CASCADE",
+  // })
+  // blogAndUserId: Blog;
   @ManyToOne(() => Blog, (blog) => blog.articles)
   blogAndUserId: Blog;
 
@@ -49,6 +57,6 @@ export class Article {
   @JoinTable()
   categories: Tag[];
 
-  // @OneToMany(() => Comment, (comment) => comment.)
-  // public comments: Comment[];
+  @OneToMany(() => Comment, (comment) => comment.article)
+  public comments: Comment[];
 }
