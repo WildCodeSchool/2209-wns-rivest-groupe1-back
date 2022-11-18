@@ -16,7 +16,7 @@ class AddUserInput {
   pseudo: string;
 
   @Field()
-  description: string;
+  description?: string;
 
   @Field()
   avatar?: string;

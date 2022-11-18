@@ -1,13 +1,19 @@
-import { Field, ObjectType } from "type-graphql";
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from "typeorm";
-import { Article } from "./article";
-import { Category } from "./category";
+import { Field, ObjectType } from 'type-graphql';
+import {
+  Column,
+  Entity,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
+import { Category } from './category';
+import { Article } from './article';
 
 @ObjectType()
 @Entity()
 export class Blog {
   @Field()
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn() // uid
   id: number;
 
   @Field()
@@ -22,9 +28,11 @@ export class Blog {
   @Column()
   content: string;
 
-  @OneToMany(() => Category, (category) => category.blogAndUserId)
-  public categories: Category;
-
+  @Field(() => [Article])
   @OneToMany(() => Article, (article) => article.blogAndUserId)
-  public articles: Article[];
+  articles: Article[];
+
+  @Field()
+  @ManyToOne(() => Category, (category) => category.blogs)
+  public category: Category;
 }

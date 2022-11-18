@@ -1,4 +1,4 @@
-import { Field, ObjectType } from "type-graphql";
+import { Field, ObjectType } from 'type-graphql';
 import {
   Column,
   Entity,
@@ -9,10 +9,10 @@ import {
   OneToMany,
   UpdateDateColumn,
   CreateDateColumn,
-} from "typeorm";
-import { Blog } from "./blog";
-import { Comment } from "./comment";
-import { Tag } from "./tag";
+} from 'typeorm';
+import { Blog } from './blog';
+import { Comment } from './comment';
+import { Tag } from './tag';
 
 @ObjectType()
 @Entity()
@@ -45,18 +45,15 @@ export class Article {
   @Column()
   isPublished: boolean;
 
-  // @Field()
-  // @ManyToOne(() => Blog, (blog) => blog.articles, {
-  //   onDelete: "CASCADE",
-  // })
-  // blogAndUserId: Blog;
   @ManyToOne(() => Blog, (blog) => blog.articles)
   blogAndUserId: Blog;
 
+  @Field(() => [Tag])
   @ManyToMany(() => Tag)
   @JoinTable()
   categories: Tag[];
 
+  @Field(() => [Comment])
   @OneToMany(() => Comment, (comment) => comment.article)
   public comments: Comment[];
 }

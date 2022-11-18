@@ -1,6 +1,6 @@
-import { Field, ObjectType } from "type-graphql";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { Article } from "./article";
+import { Field, ObjectType } from 'type-graphql';
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Article } from './article';
 
 @ObjectType()
 @Entity()

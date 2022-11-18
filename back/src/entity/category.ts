@@ -1,6 +1,6 @@
-import { Blog } from "./blog";
-import { Field, ObjectType } from "type-graphql";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Field, ObjectType } from 'type-graphql';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Blog } from './blog';
 
 @ObjectType()
 @Entity()
@@ -13,6 +13,7 @@ export class Category {
   @Column()
   label: string;
 
-  @ManyToOne(() => Blog, (blog) => blog.articles)
-  blogAndUserId: Blog;
+  @Field(() => [Blog])
+  @OneToMany(() => Blog, (blog) => blog.category)
+  public blogs: Blog[];
 }

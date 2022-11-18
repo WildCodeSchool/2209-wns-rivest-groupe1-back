@@ -16,9 +16,9 @@ export class User {
   @Column()
   pseudo: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Column()
-  description: string;
+  description?: string;
 
   @Field({ nullable: true })
   @Column()
