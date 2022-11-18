@@ -12,6 +12,18 @@ export class User {
   @Column()
   email: string;
 
+  @Field()
+  @Column()
+  pseudo: string;
+
+  @Field({ nullable: true })
+  @Column()
+  description?: string;
+
+  @Field({ nullable: true })
+  @Column()
+  avatar?: string;
+
   @Column()
   hashedPassword: string;
 
